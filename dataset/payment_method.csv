@@ -1,0 +1,6 @@
+payment_method_id,name
+1,Cash
+2,Credit Card
+3,Debit
+4,Mobile Payments
+5,Gift Cards

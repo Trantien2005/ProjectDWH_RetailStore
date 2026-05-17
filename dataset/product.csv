@@ -1,0 +1,101 @@
+product_id,name,price,main_ingredient
+1,Mood Enhancer with Magnesium,19.44,Magnesium
+2,Joint Relief with Vitamin D3,159.68,Vitamin D3
+3,Super Greens with Ashwagandha,10.89,Ashwagandha
+4,Men's Daily with Iron,28.08,Iron
+5,Energy Boost with Ashwagandha,11.85,Ashwagandha
+6,Antioxidant Blend with Vitamin D3,18.36,Vitamin D3
+7,Collagen Builder with Curcumin (Turmeric),36.38,Curcumin (Turmeric)
+8,Super Greens with Calcium,14.53,Calcium
+9,Brain Support with Iron,219.82,Iron
+10,Metabolism Support with Calcium,9.32,Calcium
+11,Collagen Builder with Biotin,88.87,Biotin
+12,Eye Health with Biotin,19.23,Biotin
+13,Mood Enhancer with Omega-3 fatty acids (Fish Oil),44.36,Omega-3 fatty acids (Fish Oil)
+14,Eye Health with Iron,27.06,Iron
+15,Hair & Skin Support with L-Theanine,64.68,L-Theanine
+16,Metabolism Support with L-Theanine,85.06,L-Theanine
+17,Women's Daily with Green Tea Extract,19.89,Green Tea Extract
+18,Heart Health Complex with Iron,58.6,Iron
+19,Sleep Support with L-Tryptophan,17.53,L-Tryptophan
+20,Detox Complex with Magnesium,14.13,Magnesium
+21,Super Greens with Vitamin C,10.89,Vitamin C
+22,Sleep Support with L-Tryptophan,105.64,L-Tryptophan
+23,Hair & Skin Support with Biotin,12.42,Biotin
+24,Men's Daily with Vitamin B12,66.6,Vitamin B12
+25,Joint Relief with Biotin,17.19,Biotin
+26,Joint Relief with Vitamin D3,10.7,Vitamin D3
+27,Brain Support with Iron,33.5,Iron
+28,Antioxidant Blend with Iron,93.68,Iron
+29,Digestion Aid with Vitamin C,203.6,Vitamin C
+30,Super Greens with L-Theanine,9.2,L-Theanine
+31,Senior Formula with Biotin,83.06,Biotin
+32,Stress Relief with Vitamin B12,16.87,Vitamin B12
+33,Daily Multivitamin with Ashwagandha,26.01,Ashwagandha
+34,Workout Recovery with L-Theanine,160.1,L-Theanine
+35,Eye Health with Probiotics,13.26,Probiotics
+36,Liver Cleanse with Vitamin D3,91.38,Vitamin D3
+37,Brain Support with L-Theanine,14.92,L-Theanine
+38,Men's Daily with Ashwagandha,36.1,Ashwagandha
+39,Super Greens with Probiotics,46.38,Probiotics
+40,Super Greens with Iron,12.76,Iron
+41,Immune Defense with Zinc,115.38,Zinc
+42,Heart Health Complex with Vitamin D3,42.58,Vitamin D3
+43,Women's Daily with Calcium,62.55,Calcium
+44,Detox Complex with Iron,116.27,Iron
+45,Women's Daily with Vitamin D3,114.92,Vitamin D3
+46,Digestion Aid with Spirulina,39.32,Spirulina
+47,Joint Relief with Green Tea Extract,15.82,Green Tea Extract
+48,Liver Cleanse with Zinc,19.31,Zinc
+49,Detox Complex with Vitamin D3,184.82,Vitamin D3
+50,Joint Relief with Green Tea Extract,72.15,Green Tea Extract
+51,Women's Daily with Calcium,18.05,Calcium
+52,Bone Health Formula with Probiotics,8.03,Probiotics
+53,Metabolism Support with Curcumin (Turmeric),96.4,Curcumin (Turmeric)
+54,Energy Boost with Ginseng,14.9,Ginseng
+55,Heart Health Complex with Vitamin B12,76.06,Vitamin B12
+56,Workout Recovery with Biotin,12.59,Biotin
+57,Collagen Builder with Green Tea Extract,15.92,Green Tea Extract
+58,Brain Support with Vitamin D3,144.66,Vitamin D3
+59,Workout Recovery with Probiotics,39.48,Probiotics
+60,Sleep Support with Chlorella,67.44,Chlorella
+61,Eye Health with Biotin,95.54,Biotin
+62,Energy Boost with Ginseng,159.05,Ginseng
+63,Workout Recovery with Vitamin C,13.9,Vitamin C
+64,Digestion Aid with L-Theanine,13.65,L-Theanine
+65,Energy Boost with Zinc,163.49,Zinc
+66,Brain Support with Vitamin D3,158.94,Vitamin D3
+67,Women's Daily with Iron,31.05,Iron
+68,Immune Defense with Omega-3 fatty acids (Fish Oil),44.21,Omega-3 fatty acids (Fish Oil)
+69,Liver Cleanse with Vitamin C,25.97,Vitamin C
+70,Hair & Skin Support with Biotin,10.93,Biotin
+71,Hair & Skin Support with Vitamin C,87.7,Vitamin C
+72,Workout Recovery with Green Tea Extract,28.32,Green Tea Extract
+73,Joint Relief with Curcumin (Turmeric),170.05,Curcumin (Turmeric)
+74,Mood Enhancer with Vitamin B6,63.48,Vitamin B6
+75,Antioxidant Blend with L-Tryptophan,16.83,L-Tryptophan
+76,Brain Support with Vitamin B12,44.19,Vitamin B12
+77,Detox Complex with L-Theanine,17.04,L-Theanine
+78,Brain Support with L-Tryptophan,17.85,L-Tryptophan
+79,Women's Daily with Magnesium,216.12,Magnesium
+80,Hair & Skin Support with Vitamin B12,59.87,Vitamin B12
+81,Senior Formula with Biotin,134.32,Biotin
+82,Heart Health Complex with Calcium,143.77,Calcium
+83,Immune Defense with L-Theanine,17.78,L-Theanine
+84,Teen Support with Green Tea Extract,30.69,Green Tea Extract
+85,Antioxidant Blend with Vitamin D3,74.38,Vitamin D3
+86,Detox Complex with Zinc,17.0,Zinc
+87,Joint Relief with Vitamin B12,115.47,Vitamin B12
+88,Joint Relief with Vitamin D3,134.71,Vitamin D3
+89,Hair & Skin Support with Magnesium,17.07,Magnesium
+90,Sleep Support with Spirulina,90.89,Spirulina
+91,Men's Daily with Zinc,19.52,Zinc
+92,Daily Multivitamin with Probiotics,96.65,Probiotics
+93,Mood Enhancer with Zinc,68.38,Zinc
+94,Teen Support with Iron,28.71,Iron
+95,Hair & Skin Support with L-Theanine,51.94,L-Theanine
+96,Immune Defense with Zinc,39.58,Zinc
+97,Digestion Aid with Vitamin B6,40.01,Vitamin B6
+98,Senior Formula with Calcium,76.25,Calcium
+99,Antioxidant Blend with Vitamin C,210.4,Vitamin C
+100,Liver Cleanse with Omega-3 fatty acids (Fish Oil),35.37,Omega-3 fatty acids (Fish Oil)
