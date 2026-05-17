@@ -1,0 +1,84 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/28/2026 9:05:59 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NGOCTRINH"
+  DTS:CreatorName="NGOCTRINH\trinh"
+  DTS:DTSID="{4561B73D-D49B-4D5D-91F4-55C6244DDEDC}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1016.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_DimTime"
+  DTS:PackageType="5"
+  DTS:VersionBuild="12"
+  DTS:VersionGUID="{650B617D-1222-4AC6-A4F2-C5D698E7D15C}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{E36302B4-631A-4F8F-B9F5-C2839A7AB40C}"
+      DTS:ObjectName="ADMIN-PC\SQLEXPRESS.RetailStoreDWH">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=ADMIN-PC\SQLEXPRESS;Initial Catalog=RetailStoreDWH;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Load_DimTime-{E36302B4-631A-4F8F-B9F5-C2839A7AB40C}ADMIN-PC\SQLEXPRESS.RetailStoreDWH;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreStaging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{09C98441-CCDA-46EB-9554-F245A0A4E678}"
+      DTS:ObjectName="ADMIN-PC\SQLEXPRESS.RetailStoreStaging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=ADMIN-PC\SQLEXPRESS;Initial Catalog=RetailStoreStaging;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Load_DimTime-{09C98441-CCDA-46EB-9554-F245A0A4E678}ADMIN-PC\SQLEXPRESS.RetailStoreStaging;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\EXE_Load_DimTime"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{d8125a69-c6ed-42e4-b384-e31be4042e05}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="EXE_Load_DimTime"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{E36302B4-631A-4F8F-B9F5-C2839A7AB40C}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE DimTime;&#xA;&#xA;DECLARE @hour INT = 0;&#xA;DECLARE @minute INT;&#xA;DECLARE @time_key INT;&#xA;DECLARE @time_string NVARCHAR(5);&#xA;DECLARE @is_peak BIT;&#xA;&#xA;WHILE @hour &lt; 24&#xA;BEGIN&#xA;    SET @minute = 0;&#xA;&#xA;    WHILE @minute &lt; 60&#xA;    BEGIN&#xA;        SET @time_key = @hour * 100 + @minute;&#xA;&#xA;        SET @time_string =&#xA;            RIGHT('0' + CAST(@hour AS VARCHAR(2)),2) + ':' +&#xA;            RIGHT('0' + CAST(@minute AS VARCHAR(2)),2);&#xA;&#xA;        SET @is_peak =&#xA;            CASE&#xA;                WHEN (@hour &gt;= 10 AND @hour &lt;= 13)&#xA;                  OR (@hour &gt;= 17 AND @hour &lt;= 20)&#xA;                THEN 1&#xA;                ELSE 0&#xA;            END;&#xA;&#xA;        INSERT INTO DimTime(time_key, time_string, hour_of_day, minute, is_peak_hour)&#xA;        VALUES(@time_key, @time_string, @hour, @minute, @is_peak);&#xA;&#xA;        SET @minute = @minute + 1;&#xA;    END&#xA;&#xA;    SET @hour = @hour + 1;&#xA;END;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="172.8,41.6"
+          Id="Package\EXE_Load_DimTime"
+          TopLeft="152.142857339005,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

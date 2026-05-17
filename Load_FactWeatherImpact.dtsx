@@ -1,0 +1,1583 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/29/2026 9:49:39 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NGOCTRINH"
+  DTS:CreatorName="NGOCTRINH\trinh"
+  DTS:DTSID="{C62590E0-9078-41EF-B9C4-7FC451CA62AB}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1016.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_FactWeatherImpact"
+  DTS:PackageType="5"
+  DTS:VersionBuild="17"
+  DTS:VersionGUID="{504A886E-D7B2-4647-92D3-23A5551691BD}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{E046D4BD-84B6-4A67-97C6-8BEB23E2D9F7}"
+      DTS:ObjectName="ADMIN-PC\SQLEXPRESS.RetailStoreDWH">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=ADMIN-PC\SQLEXPRESS;Initial Catalog=RetailStoreDWH;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Load_FactWeatherImpact-{E046D4BD-84B6-4A67-97C6-8BEB23E2D9F7}ADMIN-PC\SQLEXPRESS.RetailStoreDWH;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreStaging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{D4B2DB8F-8B76-4892-895F-54E90F0AC16D}"
+      DTS:ObjectName="ADMIN-PC\SQLEXPRESS.RetailStoreStaging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=ADMIN-PC\SQLEXPRESS;Initial Catalog=RetailStoreStaging;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Load_FactWeatherImpact-{D4B2DB8F-8B76-4892-895F-54E90F0AC16D}ADMIN-PC\SQLEXPRESS.RetailStoreStaging;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT_Load_FactWeatherImpact"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{815A5AB0-C35A-4B3A-A478-CC82B579727C}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT_Load_FactWeatherImpact"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact"
+              componentClassID="Microsoft.Aggregate"
+              contactInfo="Aggregate;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;3"
+              description="Aggregates data with functions such as Average, Sum, Count, Max, and Min. For example, group data to compute the sum of sales per product or the average visits per day."
+              name="AGG_WeatherImpact"
+              version="3">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the approximate number of group by keys that the aggregation produces. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no KeyScale value is used."
+                  name="KeyScale"
+                  typeConverter="KeyScaleType">0</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the exact number of group by keys that the aggregation produces. If a KeyScale value is specified, the value in Keys takes precedence."
+                  name="Keys" />
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the approximate number of distinct values in a column that the aggregation counts distinctly. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no CountDistinctScale value is used."
+                  name="CountDistinctScale"
+                  typeConverter="KeyScaleType">0</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the exact number of distinct values in a column that the aggregation counts distinctly. If a CountDistinctScale value is specified, the value in CountDistinctKeys takes precedence."
+                  name="CountDistinctKeys" />
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage by which memory can be extended during the aggregation. Valid values are between 1 and 100."
+                  name="AutoExtendFactor">25</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Inputs[Aggregate Input 1]"
+                  name="Aggregate Input 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Inputs[Aggregate Input 1].Columns[date_key]"
+                      cachedDataType="i4"
+                      cachedName="date_key"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\LKP_DimDate_DateKey.Outputs[Lookup Match Output].Columns[date_key]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Inputs[Aggregate Input 1].Columns[store_key]"
+                      cachedDataType="i4"
+                      cachedName="store_key"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\LKP_DimStore_StoreKey.Outputs[Lookup Match Output].Columns[store_key]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Inputs[Aggregate Input 1].Columns[weather_key]"
+                      cachedDataType="i4"
+                      cachedName="weather_key"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\LKP_DimWeather_WeatherKey.Outputs[Lookup Match Output].Columns[weather_key]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Inputs[Aggregate Input 1].Columns[sales_id]"
+                      cachedDataType="i2"
+                      cachedName="sales_id"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[sales_id]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Inputs[Aggregate Input 1].Columns[customer_visit_id]"
+                      cachedDataType="i2"
+                      cachedName="customer_visit_id"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[customer_visit_id]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Inputs[Aggregate Input 1].Columns[duration_minutes]"
+                      cachedDataType="i4"
+                      cachedName="duration_minutes"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[duration_minutes]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Inputs[Aggregate Input 1].Columns[calculated_revenue]"
+                      cachedDataType="r8"
+                      cachedName="calculated_revenue"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[calculated_revenue]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1]"
+                  name="Aggregate Output 1">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the approximate number of group by keys that the aggregation produces. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no KeyScale value is used."
+                      name="KeyScale"
+                      typeConverter="KeyScaleType">0</property>
+                    <property
+                      dataType="System.Null"
+                      description="Specifies the exact number of group by keys that the aggregation produces. If a KeyScale value is specified, the value in Keys takes precedence."
+                      name="Keys" />
+                  </properties>
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1].Columns[date_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1].Columns[date_key]"
+                      name="date_key">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\DFT_Load_FactWeatherImpact\LKP_DimDate_DateKey.Outputs[Lookup Match Output].Columns[date_key]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1].Columns[store_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1].Columns[store_key]"
+                      name="store_key">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\DFT_Load_FactWeatherImpact\LKP_DimStore_StoreKey.Outputs[Lookup Match Output].Columns[store_key]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1].Columns[weather_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1].Columns[weather_key]"
+                      name="weather_key">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\DFT_Load_FactWeatherImpact\LKP_DimWeather_WeatherKey.Outputs[Lookup Match Output].Columns[weather_key]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1].Columns[total_transactions]"
+                      dataType="ui4"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1].Columns[total_transactions]"
+                      name="total_transactions">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[sales_id]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">3</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the approximate number of distinct values in a column that the aggregation counts distinctly. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no CountDistinctScale value is used."
+                          name="CountDistinctScale">0</property>
+                        <property
+                          dataType="System.UInt32"
+                          description="Specifies the exact number of distinct values in a column that the aggregation counts distinctly. If a CountDistinctScale value is specified, the value in CountDistinctKeys takes precedence."
+                          name="CountDistinctKeys">0</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1].Columns[total_visits]"
+                      dataType="ui4"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1].Columns[total_visits]"
+                      name="total_visits">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[customer_visit_id]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">3</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the approximate number of distinct values in a column that the aggregation counts distinctly. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no CountDistinctScale value is used."
+                          name="CountDistinctScale">0</property>
+                        <property
+                          dataType="System.UInt32"
+                          description="Specifies the exact number of distinct values in a column that the aggregation counts distinctly. If a CountDistinctScale value is specified, the value in CountDistinctKeys takes precedence."
+                          name="CountDistinctKeys">0</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1].Columns[avg_visit_duration_minutes]"
+                      dataType="r8"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1].Columns[avg_visit_duration_minutes]"
+                      name="avg_visit_duration_minutes">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[duration_minutes]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">5</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1].Columns[total_revenue]"
+                      dataType="r8"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1].Columns[total_revenue]"
+                      name="total_revenue">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[calculated_revenue]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">4</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DST_FactWeatherImpact"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[FactWeatherImpact]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input].Columns[date_key]"
+                      cachedDataType="i4"
+                      cachedName="date_key"
+                      externalMetadataColumnId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input].ExternalColumns[date_key]"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1].Columns[date_key]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input].Columns[store_key]"
+                      cachedDataType="i4"
+                      cachedName="store_key"
+                      externalMetadataColumnId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input].ExternalColumns[store_key]"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1].Columns[store_key]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input].Columns[weather_key]"
+                      cachedDataType="i4"
+                      cachedName="weather_key"
+                      externalMetadataColumnId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input].ExternalColumns[weather_key]"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1].Columns[weather_key]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input].Columns[total_transactions]"
+                      cachedDataType="ui4"
+                      cachedName="total_transactions"
+                      externalMetadataColumnId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input].ExternalColumns[total_transactions]"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1].Columns[total_transactions]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input].Columns[total_visits]"
+                      cachedDataType="ui4"
+                      cachedName="total_visits"
+                      externalMetadataColumnId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input].ExternalColumns[total_visits]"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1].Columns[total_visits]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input].Columns[avg_visit_duration_minutes]"
+                      cachedDataType="r8"
+                      cachedName="avg_visit_duration_minutes"
+                      externalMetadataColumnId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input].ExternalColumns[avg_visit_duration_minutes]"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1].Columns[avg_visit_duration_minutes]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input].Columns[total_revenue]"
+                      cachedDataType="r8"
+                      cachedName="total_revenue"
+                      externalMetadataColumnId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input].ExternalColumns[total_revenue]"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1].Columns[total_revenue]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input].ExternalColumns[date_key]"
+                      dataType="i4"
+                      name="date_key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input].ExternalColumns[store_key]"
+                      dataType="i4"
+                      name="store_key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input].ExternalColumns[weather_key]"
+                      dataType="i4"
+                      name="weather_key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input].ExternalColumns[total_visits]"
+                      dataType="i4"
+                      name="total_visits" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input].ExternalColumns[total_transactions]"
+                      dataType="i4"
+                      name="total_transactions" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input].ExternalColumns[total_revenue]"
+                      dataType="numeric"
+                      name="total_revenue"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input].ExternalColumns[avg_visit_duration_minutes]"
+                      dataType="r8"
+                      name="avg_visit_duration_minutes" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Load_FactWeatherImpact\LKP_DimDate_DateKey"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="LKP_DimDate_DateKey"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[DimDate]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[DimDate]) [refTable]
+where [refTable].[full_date] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="date_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="full_date" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="day_of_week" dataType="DT_WSTR" length="10" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="month" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="quarter" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="year" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="is_weekend" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="season" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[date]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Load_FactWeatherImpact\LKP_DimDate_DateKey.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_Load_FactWeatherImpact\LKP_DimDate_DateKey.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\LKP_DimDate_DateKey.Inputs[Lookup Input].Columns[date]"
+                      cachedDataType="dbDate"
+                      cachedName="date"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[date]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">full_date</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Load_FactWeatherImpact\LKP_DimDate_DateKey.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT_Load_FactWeatherImpact\LKP_DimDate_DateKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\LKP_DimDate_DateKey.Outputs[Lookup Match Output].Columns[date_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\LKP_DimDate_DateKey.Outputs[Lookup Match Output].Columns[date_key]"
+                      name="date_key"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">date_key</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Load_FactWeatherImpact\LKP_DimDate_DateKey.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT_Load_FactWeatherImpact\LKP_DimDate_DateKey.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Load_FactWeatherImpact\LKP_DimDate_DateKey.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT_Load_FactWeatherImpact\LKP_DimDate_DateKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\LKP_DimDate_DateKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\LKP_DimDate_DateKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\LKP_DimDate_DateKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\LKP_DimDate_DateKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Load_FactWeatherImpact\LKP_DimStore_StoreKey"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="LKP_DimStore_StoreKey"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[DimStore]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[DimStore]) [refTable]
+where [refTable].[store_id] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="store_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="store_id" dataType="DT_UI1" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="street" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="city" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="province" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="country" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[store_id]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Load_FactWeatherImpact\LKP_DimStore_StoreKey.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_Load_FactWeatherImpact\LKP_DimStore_StoreKey.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\LKP_DimStore_StoreKey.Inputs[Lookup Input].Columns[store_id]"
+                      cachedDataType="ui1"
+                      cachedName="store_id"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[store_id]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">store_id</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Load_FactWeatherImpact\LKP_DimStore_StoreKey.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT_Load_FactWeatherImpact\LKP_DimStore_StoreKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\LKP_DimStore_StoreKey.Outputs[Lookup Match Output].Columns[store_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\LKP_DimStore_StoreKey.Outputs[Lookup Match Output].Columns[store_key]"
+                      name="store_key"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">store_key</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Load_FactWeatherImpact\LKP_DimStore_StoreKey.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT_Load_FactWeatherImpact\LKP_DimStore_StoreKey.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Load_FactWeatherImpact\LKP_DimStore_StoreKey.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT_Load_FactWeatherImpact\LKP_DimStore_StoreKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\LKP_DimStore_StoreKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\LKP_DimStore_StoreKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\LKP_DimStore_StoreKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\LKP_DimStore_StoreKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Load_FactWeatherImpact\LKP_DimWeather_WeatherKey"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="LKP_DimWeather_WeatherKey"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[DimWeather]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[DimWeather]) [refTable]
+where [refTable].[weather_id] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="weather_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="weather_id" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="weather_condition" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[weather_id]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Load_FactWeatherImpact\LKP_DimWeather_WeatherKey.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_Load_FactWeatherImpact\LKP_DimWeather_WeatherKey.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\LKP_DimWeather_WeatherKey.Inputs[Lookup Input].Columns[weather_id]"
+                      cachedDataType="i8"
+                      cachedName="weather_id"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[weather_id]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">weather_id</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Load_FactWeatherImpact\LKP_DimWeather_WeatherKey.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT_Load_FactWeatherImpact\LKP_DimWeather_WeatherKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\LKP_DimWeather_WeatherKey.Outputs[Lookup Match Output].Columns[weather_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\LKP_DimWeather_WeatherKey.Outputs[Lookup Match Output].Columns[weather_key]"
+                      name="weather_key"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">weather_key</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Load_FactWeatherImpact\LKP_DimWeather_WeatherKey.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT_Load_FactWeatherImpact\LKP_DimWeather_WeatherKey.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Load_FactWeatherImpact\LKP_DimWeather_WeatherKey.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT_Load_FactWeatherImpact\LKP_DimWeather_WeatherKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\LKP_DimWeather_WeatherKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\LKP_DimWeather_WeatherKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\LKP_DimWeather_WeatherKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\LKP_DimWeather_WeatherKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC_stg_WeatherStore_Impact"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT 
+    w.weather_id,
+    v.store_id,
+    v.[date],
+    v.visit_id AS customer_visit_id,
+    sd.sales_id,
+    ISNULL(sd.quantity * p.price, 0) AS calculated_revenue,
+    DATEDIFF(MINUTE, v.entry_timestamp, v.exit_timestamp) AS duration_minutes
+FROM (
+    -- Bước này giúp lấy duy nhất 1 ID thời tiết đại diện cho ngày đó/cửa hàng đó
+    SELECT [date], store_id, MIN(weather_id) as weather_id
+    FROM stg_weather_store
+    GROUP BY [date], store_id
+) w
+INNER JOIN stg_customer_visit v 
+    ON w.[date] = v.[date] 
+    AND w.store_id = v.store_id -- Phải join thêm store_id để khớp đúng khu vực
+LEFT JOIN stg_sales s ON v.visit_id = s.visit_id
+LEFT JOIN stg_sales_detail sd ON s.sales_id = sd.sales_id
+LEFT JOIN stg_product p ON sd.product_id = p.product_id</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreStaging]"
+                  connectionManagerRefId="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreStaging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[weather_id]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].ExternalColumns[weather_id]"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[weather_id]"
+                      name="weather_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[store_id]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].ExternalColumns[store_id]"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[store_id]"
+                      name="store_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].ExternalColumns[date]"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[date]"
+                      name="date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[customer_visit_id]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].ExternalColumns[customer_visit_id]"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[customer_visit_id]"
+                      name="customer_visit_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[duration_minutes]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].ExternalColumns[duration_minutes]"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[duration_minutes]"
+                      name="duration_minutes"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[sales_id]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].ExternalColumns[sales_id]"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[sales_id]"
+                      name="sales_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[calculated_revenue]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].ExternalColumns[calculated_revenue]"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].Columns[calculated_revenue]"
+                      name="calculated_revenue"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].ExternalColumns[weather_id]"
+                      dataType="i8"
+                      name="weather_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].ExternalColumns[store_id]"
+                      dataType="ui1"
+                      name="store_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].ExternalColumns[date]"
+                      dataType="dbDate"
+                      name="date" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].ExternalColumns[customer_visit_id]"
+                      dataType="i2"
+                      name="customer_visit_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].ExternalColumns[duration_minutes]"
+                      dataType="i4"
+                      name="duration_minutes" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].ExternalColumns[sales_id]"
+                      dataType="i2"
+                      name="sales_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output].ExternalColumns[calculated_revenue]"
+                      dataType="r8"
+                      name="calculated_revenue" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Error Output].Columns[weather_id]"
+                      dataType="i8"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Error Output].Columns[weather_id]"
+                      name="weather_id" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Error Output].Columns[store_id]"
+                      dataType="ui1"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Error Output].Columns[store_id]"
+                      name="store_id" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Error Output].Columns[date]"
+                      dataType="dbDate"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Error Output].Columns[date]"
+                      name="date" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Error Output].Columns[customer_visit_id]"
+                      dataType="i2"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Error Output].Columns[customer_visit_id]"
+                      name="customer_visit_id" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Error Output].Columns[duration_minutes]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Error Output].Columns[duration_minutes]"
+                      name="duration_minutes" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Error Output].Columns[calculated_revenue]"
+                      dataType="r8"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Error Output].Columns[calculated_revenue]"
+                      name="calculated_revenue" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Error Output].Columns[sales_id]"
+                      dataType="i2"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Error Output].Columns[sales_id]"
+                      name="sales_id" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT_Load_FactWeatherImpact.Paths[Aggregate Output 1]"
+              endId="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact.Inputs[OLE DB Destination Input]"
+              name="Aggregate Output 1"
+              startId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Outputs[Aggregate Output 1]" />
+            <path
+              refId="Package\DFT_Load_FactWeatherImpact.Paths[Lookup Match Output]"
+              endId="Package\DFT_Load_FactWeatherImpact\LKP_DimStore_StoreKey.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\DFT_Load_FactWeatherImpact\LKP_DimDate_DateKey.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT_Load_FactWeatherImpact.Paths[Lookup Match Output1]"
+              endId="Package\DFT_Load_FactWeatherImpact\LKP_DimWeather_WeatherKey.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\DFT_Load_FactWeatherImpact\LKP_DimStore_StoreKey.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT_Load_FactWeatherImpact.Paths[Lookup Match Output2]"
+              endId="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact.Inputs[Aggregate Input 1]"
+              name="Lookup Match Output"
+              startId="Package\DFT_Load_FactWeatherImpact\LKP_DimWeather_WeatherKey.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT_Load_FactWeatherImpact.Paths[OLE DB Source Output]"
+              endId="Package\DFT_Load_FactWeatherImpact\LKP_DimDate_DateKey.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="224,41.6"
+          Id="Package\DFT_Load_FactWeatherImpact"
+          TopLeft="159.785714614148,66.6764705346117" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DFT_Load_FactWeatherImpact">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="192.8,41.6"
+          Id="Package\DFT_Load_FactWeatherImpact\LKP_DimStore_StoreKey"
+          TopLeft="164.785714497067,163.382352855379" />
+        <NodeLayout
+          Size="196,41.6"
+          Id="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact"
+          TopLeft="359.785715039896,433.947058680086" />
+        <NodeLayout
+          Size="226.4,41.6"
+          Id="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact"
+          TopLeft="234.071429057997,6.26470588168264" />
+        <NodeLayout
+          Size="187.2,41.6"
+          Id="Package\DFT_Load_FactWeatherImpact\LKP_DimDate_DateKey"
+          TopLeft="376.928572155383,88.2647058361026" />
+        <NodeLayout
+          Size="223.2,41.6"
+          Id="Package\DFT_Load_FactWeatherImpact\LKP_DimWeather_WeatherKey"
+          TopLeft="354.071429121859,249.970588099894" />
+        <NodeLayout
+          Size="177.6,41.6"
+          Id="Package\DFT_Load_FactWeatherImpact\AGG_WeatherImpact"
+          TopLeft="197.642857551879,346.382352775613" />
+        <EdgeLayout
+          Id="Package\DFT_Load_FactWeatherImpact.Paths[Lookup Match Output2]"
+          TopLeft="465.671429121859,291.570588099894">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-179.228571569981,54.8117646757192"
+              Start="0,0"
+              End="-179.228571569981,47.3117646757192">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.4058823378596" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.4058823378596"
+                    Point2="0,27.4058823378596"
+                    Point3="-4,27.4058823378596" />
+                  <mssgle:LineSegment
+                    End="-175.228571569981,27.4058823378596" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-175.228571569981,27.4058823378596"
+                    Point2="-179.228571569981,27.4058823378596"
+                    Point3="-179.228571569981,31.4058823378596" />
+                  <mssgle:LineSegment
+                    End="-179.228571569981,47.3117646757192" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-137.80567250374,32.4058823378596,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_Load_FactWeatherImpact.Paths[Lookup Match Output1]"
+          TopLeft="261.185714497067,204.982352855379">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="204.485714624792,44.9882352445154"
+              Start="0,0"
+              End="204.485714624792,37.4882352445154">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.4941176222577" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.4941176222577"
+                    Point2="0,22.4941176222577"
+                    Point3="4,22.4941176222577" />
+                  <mssgle:LineSegment
+                    End="200.485714624792,22.4941176222577" />
+                  <mssgle:CubicBezierSegment
+                    Point1="200.485714624792,22.4941176222577"
+                    Point2="204.485714624792,22.4941176222577"
+                    Point3="204.485714624792,26.4941176222577" />
+                  <mssgle:LineSegment
+                    End="204.485714624792,37.4882352445154" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="54.0514705936459,27.4941176222577,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_Load_FactWeatherImpact.Paths[Lookup Match Output]"
+          TopLeft="470.528572155383,129.864705836103">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-209.342857658316,33.5176470192763"
+              Start="0,0"
+              End="-209.342857658316,26.0176470192763">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.7588235096381" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12.7588235096381"
+                    Point2="0,16.7588235096381"
+                    Point3="-4,16.7588235096381" />
+                  <mssgle:LineSegment
+                    End="-205.342857658316,16.7588235096381" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-205.342857658316,16.7588235096381"
+                    Point2="-209.342857658316,16.7588235096381"
+                    Point3="-209.342857658316,20.7588235096381" />
+                  <mssgle:LineSegment
+                    End="-209.342857658316,26.0176470192763" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-152.862815547908,21.7588235096381,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_Load_FactWeatherImpact.Paths[Aggregate Output 1]"
+          TopLeft="286.442857551879,387.982352775613">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="171.342857488017,45.9647059044729"
+              Start="0,0"
+              End="171.342857488017,38.4647059044729">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.9823529522364" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.9823529522364"
+                    Point2="0,22.9823529522364"
+                    Point3="4,22.9823529522364" />
+                  <mssgle:LineSegment
+                    End="167.342857488017,22.9823529522364" />
+                  <mssgle:CubicBezierSegment
+                    Point1="167.342857488017,22.9823529522364"
+                    Point2="171.342857488017,22.9823529522364"
+                    Point3="171.342857488017,26.9823529522364" />
+                  <mssgle:LineSegment
+                    End="171.342857488017,38.4647059044729" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_Load_FactWeatherImpact.Paths[OLE DB Source Output]"
+          TopLeft="347.271429057997,47.8647058816826">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="123.257143097386,40.3999999544199"
+              Start="0,0"
+              End="123.257143097386,32.8999999544199">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.19999997721" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.19999997721"
+                    Point2="0,20.19999997721"
+                    Point3="4,20.19999997721" />
+                  <mssgle:LineSegment
+                    End="119.257143097386,20.19999997721" />
+                  <mssgle:CubicBezierSegment
+                    Point1="119.257143097386,20.19999997721"
+                    Point2="123.257143097386,20.19999997721"
+                    Point3="123.257143097386,24.19999997721" />
+                  <mssgle:LineSegment
+                    End="123.257143097386,32.8999999544199" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Load_FactWeatherImpact\LKP_DimStore_StoreKey">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[DimStore]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Load_FactWeatherImpact\DST_FactWeatherImpact">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Load_FactWeatherImpact\SRC_stg_WeatherStore_Impact">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Load_FactWeatherImpact\LKP_DimDate_DateKey">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[DimDate]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Load_FactWeatherImpact\LKP_DimWeather_WeatherKey">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[DimWeather]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

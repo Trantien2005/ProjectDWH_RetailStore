@@ -1,0 +1,1194 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/27/2026 2:30:10 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ADMIN-PC"
+  DTS:CreatorName="ADMIN-PC\Admin"
+  DTS:DTSID="{B629AE2B-079E-4169-BF7B-083D655B7255}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1016.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_DimStore"
+  DTS:PackageType="5"
+  DTS:VersionBuild="24"
+  DTS:VersionGUID="{75F33A78-7467-41DF-920F-516A996F3CAC}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{2D8C3438-96A6-40B1-8341-A8A78707DAFE}"
+      DTS:ObjectName="ADMIN-PC\SQLEXPRESS.RetailStoreDWH">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=ADMIN-PC\SQLEXPRESS;Initial Catalog=RetailStoreDWH;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Load_DimStore-{2D8C3438-96A6-40B1-8341-A8A78707DAFE}ADMIN-PC\SQLEXPRESS.RetailStoreDWH;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreStaging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{9F0B7AB8-D91C-4265-B80D-870BA955B89A}"
+      DTS:ObjectName="ADMIN-PC\SQLEXPRESS.RetailStoreStaging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=ADMIN-PC\SQLEXPRESS;Initial Catalog=RetailStoreStaging;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Load_DimStore-{9F0B7AB8-D91C-4265-B80D-870BA955B89A}ADMIN-PC\SQLEXPRESS.RetailStoreStaging;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DST_DimStore"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{E97B6F0D-65C5-4504-9AB3-8FD173AA64AC}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DST_DimStore">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DST_DimStore\CMD_Update_DimStore"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="CMD_Update_DimStore"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">UPDATE DimStore
+SET street = ?,
+    city = ?,
+    province = ?,
+    country = ?
+WHERE store_id = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DST_DimStore\CMD_Update_DimStore.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DST_DimStore\CMD_Update_DimStore.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DST_DimStore\CMD_Update_DimStore.Inputs[OLE DB Command Input].Columns[street]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="street"
+                      externalMetadataColumnId="Package\DST_DimStore\CMD_Update_DimStore.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[street]" />
+                    <inputColumn
+                      refId="Package\DST_DimStore\CMD_Update_DimStore.Inputs[OLE DB Command Input].Columns[city]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="city"
+                      externalMetadataColumnId="Package\DST_DimStore\CMD_Update_DimStore.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[city]" />
+                    <inputColumn
+                      refId="Package\DST_DimStore\CMD_Update_DimStore.Inputs[OLE DB Command Input].Columns[province]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="province"
+                      externalMetadataColumnId="Package\DST_DimStore\CMD_Update_DimStore.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[province]" />
+                    <inputColumn
+                      refId="Package\DST_DimStore\CMD_Update_DimStore.Inputs[OLE DB Command Input].Columns[country]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="country"
+                      externalMetadataColumnId="Package\DST_DimStore\CMD_Update_DimStore.Inputs[OLE DB Command Input].ExternalColumns[Param_3]"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[country]" />
+                    <inputColumn
+                      refId="Package\DST_DimStore\CMD_Update_DimStore.Inputs[OLE DB Command Input].Columns[store_id]"
+                      cachedDataType="ui1"
+                      cachedName="store_id"
+                      externalMetadataColumnId="Package\DST_DimStore\CMD_Update_DimStore.Inputs[OLE DB Command Input].ExternalColumns[Param_4]"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[store_id]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DST_DimStore\CMD_Update_DimStore.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="wstr"
+                      length="50"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DST_DimStore\CMD_Update_DimStore.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      dataType="wstr"
+                      length="50"
+                      name="Param_1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DST_DimStore\CMD_Update_DimStore.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      dataType="wstr"
+                      length="50"
+                      name="Param_2">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DST_DimStore\CMD_Update_DimStore.Inputs[OLE DB Command Input].ExternalColumns[Param_3]"
+                      dataType="wstr"
+                      length="30"
+                      name="Param_3">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DST_DimStore\CMD_Update_DimStore.Inputs[OLE DB Command Input].ExternalColumns[Param_4]"
+                      dataType="ui1"
+                      name="Param_4">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DST_DimStore\CMD_Update_DimStore.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\DST_DimStore\CMD_Update_DimStore.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DST_DimStore\CMD_Update_DimStore.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\DST_DimStore\CMD_Update_DimStore.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DST_DimStore\CMD_Update_DimStore.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DST_DimStore\CMD_Update_DimStore.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DST_DimStore\CMD_Update_DimStore.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DST_DimStore\CMD_Update_DimStore.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DST_DimStore\CSPL_Check_Store_Change"
+              componentClassID="Microsoft.ConditionalSplit"
+              contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+              name="CSPL_Check_Store_Change"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DST_DimStore\CSPL_Check_Store_Change.Inputs[Conditional Split Input]"
+                  description="Input to the Conditional Split Transformation"
+                  name="Conditional Split Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DST_DimStore\CSPL_Check_Store_Change.Inputs[Conditional Split Input].Columns[street]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="street"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[street]" />
+                    <inputColumn
+                      refId="Package\DST_DimStore\CSPL_Check_Store_Change.Inputs[Conditional Split Input].Columns[city]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="city"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[city]" />
+                    <inputColumn
+                      refId="Package\DST_DimStore\CSPL_Check_Store_Change.Inputs[Conditional Split Input].Columns[province]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="province"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[province]" />
+                    <inputColumn
+                      refId="Package\DST_DimStore\CSPL_Check_Store_Change.Inputs[Conditional Split Input].Columns[country]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="country"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[country]" />
+                    <inputColumn
+                      refId="Package\DST_DimStore\CSPL_Check_Store_Change.Inputs[Conditional Split Input].Columns[street_old]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="street_old"
+                      lineageId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output].Columns[street_old]" />
+                    <inputColumn
+                      refId="Package\DST_DimStore\CSPL_Check_Store_Change.Inputs[Conditional Split Input].Columns[city_old]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="city_old"
+                      lineageId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output].Columns[city_old]" />
+                    <inputColumn
+                      refId="Package\DST_DimStore\CSPL_Check_Store_Change.Inputs[Conditional Split Input].Columns[province_old]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="province_old"
+                      lineageId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output].Columns[province_old]" />
+                    <inputColumn
+                      refId="Package\DST_DimStore\CSPL_Check_Store_Change.Inputs[Conditional Split Input].Columns[country_old]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="country_old"
+                      lineageId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output].Columns[country_old]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DST_DimStore\CSPL_Check_Store_Change.Outputs[Changed]"
+                  description="Output 1 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Changed"
+                  synchronousInputId="Package\DST_DimStore\CSPL_Check_Store_Change.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">!(([ISNULL](#{Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[street]}) ? "" : #{Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[street]}) == ([ISNULL](#{Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output].Columns[street_old]}) ? "" : #{Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output].Columns[street_old]}) &amp;&amp; ([ISNULL](#{Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[city]}) ? "" : #{Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[city]}) == ([ISNULL](#{Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output].Columns[city_old]}) ? "" : #{Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output].Columns[city_old]}) &amp;&amp; ([ISNULL](#{Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[province]}) ? "" : #{Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[province]}) == ([ISNULL](#{Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output].Columns[province_old]}) ? "" : #{Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output].Columns[province_old]}) &amp;&amp; ([ISNULL](#{Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[country]}) ? "" : #{Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[country]}) == ([ISNULL](#{Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output].Columns[country_old]}) ? "" : #{Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output].Columns[country_old]}))</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">!((ISNULL(street) ? "" : street) == (ISNULL(street_old) ? "" : street_old) &amp;&amp; (ISNULL(city) ? "" : city) == (ISNULL(city_old) ? "" : city_old) &amp;&amp; (ISNULL(province) ? "" : province) == (ISNULL(province_old) ? "" : province_old) &amp;&amp; (ISNULL(country) ? "" : country) == (ISNULL(country_old) ? "" : country_old))</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DST_DimStore\CSPL_Check_Store_Change.Outputs[Conditional Split Default Output]"
+                  description="Default Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  name="Conditional Split Default Output"
+                  synchronousInputId="Package\DST_DimStore\CSPL_Check_Store_Change.Inputs[Conditional Split Input]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DST_DimStore\CSPL_Check_Store_Change.Outputs[Conditional Split Error Output]"
+                  description="Error Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Conditional Split Error Output"
+                  synchronousInputId="Package\DST_DimStore\CSPL_Check_Store_Change.Inputs[Conditional Split Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DST_DimStore\CSPL_Check_Store_Change.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DST_DimStore\CSPL_Check_Store_Change.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DST_DimStore\CSPL_Check_Store_Change.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DST_DimStore\CSPL_Check_Store_Change.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DST_DimStore\DST_DimStore"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DST_DimStore"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[DimStore]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DST_DimStore\DST_DimStore.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DST_DimStore\DST_DimStore.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DST_DimStore\DST_DimStore.Inputs[OLE DB Destination Input].Columns[store_id]"
+                      cachedDataType="ui1"
+                      cachedName="store_id"
+                      externalMetadataColumnId="Package\DST_DimStore\DST_DimStore.Inputs[OLE DB Destination Input].ExternalColumns[store_id]"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[store_id]" />
+                    <inputColumn
+                      refId="Package\DST_DimStore\DST_DimStore.Inputs[OLE DB Destination Input].Columns[street]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="street"
+                      externalMetadataColumnId="Package\DST_DimStore\DST_DimStore.Inputs[OLE DB Destination Input].ExternalColumns[street]"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[street]" />
+                    <inputColumn
+                      refId="Package\DST_DimStore\DST_DimStore.Inputs[OLE DB Destination Input].Columns[city]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="city"
+                      externalMetadataColumnId="Package\DST_DimStore\DST_DimStore.Inputs[OLE DB Destination Input].ExternalColumns[city]"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[city]" />
+                    <inputColumn
+                      refId="Package\DST_DimStore\DST_DimStore.Inputs[OLE DB Destination Input].Columns[province]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="province"
+                      externalMetadataColumnId="Package\DST_DimStore\DST_DimStore.Inputs[OLE DB Destination Input].ExternalColumns[province]"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[province]" />
+                    <inputColumn
+                      refId="Package\DST_DimStore\DST_DimStore.Inputs[OLE DB Destination Input].Columns[country]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="country"
+                      externalMetadataColumnId="Package\DST_DimStore\DST_DimStore.Inputs[OLE DB Destination Input].ExternalColumns[country]"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[country]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DST_DimStore\DST_DimStore.Inputs[OLE DB Destination Input].ExternalColumns[store_key]"
+                      dataType="i4"
+                      name="store_key" />
+                    <externalMetadataColumn
+                      refId="Package\DST_DimStore\DST_DimStore.Inputs[OLE DB Destination Input].ExternalColumns[store_id]"
+                      dataType="ui1"
+                      name="store_id" />
+                    <externalMetadataColumn
+                      refId="Package\DST_DimStore\DST_DimStore.Inputs[OLE DB Destination Input].ExternalColumns[street]"
+                      dataType="wstr"
+                      length="50"
+                      name="street" />
+                    <externalMetadataColumn
+                      refId="Package\DST_DimStore\DST_DimStore.Inputs[OLE DB Destination Input].ExternalColumns[city]"
+                      dataType="wstr"
+                      length="50"
+                      name="city" />
+                    <externalMetadataColumn
+                      refId="Package\DST_DimStore\DST_DimStore.Inputs[OLE DB Destination Input].ExternalColumns[province]"
+                      dataType="wstr"
+                      length="50"
+                      name="province" />
+                    <externalMetadataColumn
+                      refId="Package\DST_DimStore\DST_DimStore.Inputs[OLE DB Destination Input].ExternalColumns[country]"
+                      dataType="wstr"
+                      length="30"
+                      name="country" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DST_DimStore\DST_DimStore.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DST_DimStore\DST_DimStore.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DST_DimStore\DST_DimStore.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DST_DimStore\DST_DimStore.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DST_DimStore\DST_DimStore.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DST_DimStore\DST_DimStore.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DST_DimStore\LKP_DimStore"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="LKP_DimStore"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[DimStore]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[DimStore]) [refTable]
+where [refTable].[store_id] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="store_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="store_id" dataType="DT_UI1" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="street" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="city" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="province" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="country" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[store_id]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DST_DimStore\LKP_DimStore.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DST_DimStore\LKP_DimStore.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DST_DimStore\LKP_DimStore.Inputs[Lookup Input].Columns[store_id]"
+                      cachedDataType="ui1"
+                      cachedName="store_id"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[store_id]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">store_id</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DST_DimStore\LKP_DimStore.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output].Columns[store_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output].Columns[store_key]"
+                      name="store_key"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">store_key</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output].Columns[street_old]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="50"
+                      lineageId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output].Columns[street_old]"
+                      name="street_old"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">street</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output].Columns[city_old]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="50"
+                      lineageId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output].Columns[city_old]"
+                      name="city_old"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">city</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output].Columns[province_old]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="50"
+                      lineageId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output].Columns[province_old]"
+                      name="province_old"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">province</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output].Columns[country_old]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="30"
+                      lineageId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output].Columns[country_old]"
+                      name="country_old"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">country</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DST_DimStore\LKP_DimStore.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DST_DimStore\LKP_DimStore.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DST_DimStore\SRC_stg_Store"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC_stg_Store"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT DISTINCT
+    store_id,
+    street,
+    city,
+    province,
+    country
+FROM stg_store;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DST_DimStore\SRC_stg_Store.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreStaging]"
+                  connectionManagerRefId="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreStaging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[store_id]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].ExternalColumns[store_id]"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[store_id]"
+                      name="store_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[street]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].ExternalColumns[street]"
+                      length="50"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[street]"
+                      name="street"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[city]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].ExternalColumns[city]"
+                      length="50"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[city]"
+                      name="city"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[province]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].ExternalColumns[province]"
+                      length="50"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[province]"
+                      name="province"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[country]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].ExternalColumns[country]"
+                      length="50"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].Columns[country]"
+                      name="country"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].ExternalColumns[store_id]"
+                      dataType="ui1"
+                      name="store_id" />
+                    <externalMetadataColumn
+                      refId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].ExternalColumns[street]"
+                      dataType="wstr"
+                      length="50"
+                      name="street" />
+                    <externalMetadataColumn
+                      refId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].ExternalColumns[city]"
+                      dataType="wstr"
+                      length="50"
+                      name="city" />
+                    <externalMetadataColumn
+                      refId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].ExternalColumns[province]"
+                      dataType="wstr"
+                      length="50"
+                      name="province" />
+                    <externalMetadataColumn
+                      refId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output].ExternalColumns[country]"
+                      dataType="wstr"
+                      length="50"
+                      name="country" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Error Output].Columns[store_id]"
+                      dataType="ui1"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Error Output].Columns[store_id]"
+                      name="store_id" />
+                    <outputColumn
+                      refId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Error Output].Columns[street]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Error Output].Columns[street]"
+                      name="street" />
+                    <outputColumn
+                      refId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Error Output].Columns[city]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Error Output].Columns[city]"
+                      name="city" />
+                    <outputColumn
+                      refId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Error Output].Columns[province]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Error Output].Columns[province]"
+                      name="province" />
+                    <outputColumn
+                      refId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Error Output].Columns[country]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Error Output].Columns[country]"
+                      name="country" />
+                    <outputColumn
+                      refId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DST_DimStore.Paths[Changed]"
+              endId="Package\DST_DimStore\CMD_Update_DimStore.Inputs[OLE DB Command Input]"
+              name="Changed"
+              startId="Package\DST_DimStore\CSPL_Check_Store_Change.Outputs[Changed]" />
+            <path
+              refId="Package\DST_DimStore.Paths[Lookup Match Output]"
+              endId="Package\DST_DimStore\CSPL_Check_Store_Change.Inputs[Conditional Split Input]"
+              name="Lookup Match Output"
+              startId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DST_DimStore.Paths[Lookup No Match Output]"
+              endId="Package\DST_DimStore\DST_DimStore.Inputs[OLE DB Destination Input]"
+              name="Lookup No Match Output"
+              startId="Package\DST_DimStore\LKP_DimStore.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\DST_DimStore.Paths[OLE DB Source Output]"
+              endId="Package\DST_DimStore\LKP_DimStore.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\DST_DimStore\SRC_stg_Store.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="147.2,41.6"
+          Id="Package\DST_DimStore"
+          TopLeft="244.785714795091,77.3823528781688" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DST_DimStore">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="147.2,41.6"
+          Id="Package\DST_DimStore\DST_DimStore"
+          TopLeft="409.785715146332,262.44117624537" />
+        <NodeLayout
+          Size="208,41.6"
+          Id="Package\DST_DimStore\CSPL_Check_Store_Change"
+          TopLeft="92.142857339005,259.9999997721" />
+        <NodeLayout
+          Size="144.8,41.6"
+          Id="Package\DST_DimStore\LKP_DimStore"
+          TopLeft="251.928571953153,135.49999988605" />
+        <NodeLayout
+          Size="148,41.6"
+          Id="Package\DST_DimStore\SRC_stg_Store"
+          TopLeft="247.142851623346,50.2941169297922" />
+        <NodeLayout
+          Size="188.8,41.6"
+          Id="Package\DST_DimStore\CMD_Update_DimStore"
+          TopLeft="112.14285738158,365.529411444305" />
+        <EdgeLayout
+          Id="Package\DST_DimStore.Paths[Lookup No Match Output]"
+          TopLeft="347.128571953153,177.09999988605">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="136.257143193179,85.3411763593197"
+              Start="0,0"
+              End="136.257143193179,77.8411763593197">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30.6960848149365" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,30.6960848149365"
+                    Point2="0,34.6960848149365"
+                    Point3="4,34.6960848149365" />
+                  <mssgle:LineSegment
+                    End="132.257143193179,34.6960848149365" />
+                  <mssgle:CubicBezierSegment
+                    Point1="132.257143193179,34.6960848149365"
+                    Point2="136.257143193179,34.6960848149365"
+                    Point3="136.257143193179,38.6960848149365" />
+                  <mssgle:LineSegment
+                    End="136.257143193179,77.8411763593197" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="12.3221848778395,39.6960848149365,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DST_DimStore.Paths[Lookup Match Output]"
+          TopLeft="301.528571953153,177.09999988605">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-105.385714614148,82.89999988605"
+              Start="0,0"
+              End="-105.385714614148,75.39999988605">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.7036065110498" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29.7036065110498"
+                    Point2="0,33.7036065110498"
+                    Point3="-4,33.7036065110498" />
+                  <mssgle:LineSegment
+                    End="-101.385714614148,33.7036065110498" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-101.385714614148,33.7036065110498"
+                    Point2="-105.385714614148,33.7036065110498"
+                    Point3="-105.385714614148,37.7036065110498" />
+                  <mssgle:LineSegment
+                    End="-105.385714614148,75.39999988605" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-100.884244025824,38.7036065110498,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DST_DimStore.Paths[Changed]"
+          TopLeft="196.142857339005,301.5999997721">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="10.400000042575,63.929411672205"
+              Start="0,0"
+              End="10.400000042575,56.429411672205">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.9647058361025" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,27.9647058361025"
+                    Point2="0,31.9647058361025"
+                    Point3="4,31.9647058361025" />
+                  <mssgle:LineSegment
+                    End="6.40000004257502,31.9647058361025" />
+                  <mssgle:CubicBezierSegment
+                    Point1="6.40000004257502,31.9647058361025"
+                    Point2="10.400000042575,31.9647058361025"
+                    Point3="10.400000042575,35.9647058361025" />
+                  <mssgle:LineSegment
+                    End="10.400000042575,56.429411672205" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-14.6755077912125,36.9647058361025,39.751015625,11.6630859375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DST_DimStore.Paths[OLE DB Source Output]"
+          TopLeft="322.73571178825,91.8941169297922">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43.6058829562578"
+              Start="0,0"
+              End="0,36.1058829562578">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.1058829562578" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DST_DimStore\DST_DimStore">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DST_DimStore\SRC_stg_Store">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DST_DimStore\LKP_DimStore">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[DimStore]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

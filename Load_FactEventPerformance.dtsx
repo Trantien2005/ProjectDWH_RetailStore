@@ -1,0 +1,1561 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/29/2026 11:46:50 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NGOCTRINH"
+  DTS:CreatorName="NGOCTRINH\trinh"
+  DTS:DTSID="{7C770B72-44C5-46F8-AB27-76860A552617}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1016.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_FactEventPerformance"
+  DTS:PackageType="5"
+  DTS:VersionBuild="16"
+  DTS:VersionGUID="{787F6ECC-8755-4F0E-8894-104B92022634}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{C6D25475-70C5-4CBC-AF1D-9D5379B04A71}"
+      DTS:ObjectName="ADMIN-PC\SQLEXPRESS.RetailStoreDWH">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=ADMIN-PC\SQLEXPRESS;Initial Catalog=RetailStoreDWH;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Load_FactEventPerformance-{C6D25475-70C5-4CBC-AF1D-9D5379B04A71}ADMIN-PC\SQLEXPRESS.RetailStoreDWH;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreStaging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{5844C390-152F-4071-8897-4A81841E1028}"
+      DTS:ObjectName="ADMIN-PC\SQLEXPRESS.RetailStoreStaging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=ADMIN-PC\SQLEXPRESS;Initial Catalog=RetailStoreStaging;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Load_FactEventPerformance-{5844C390-152F-4071-8897-4A81841E1028}ADMIN-PC\SQLEXPRESS.RetailStoreStaging;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT_Load_FactEventPerformance"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{3BDFD2AE-276F-4578-8D56-DF37DE0377A6}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT_Load_FactEventPerformance"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary"
+              componentClassID="Microsoft.Aggregate"
+              contactInfo="Aggregate;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;3"
+              description="Aggregates data with functions such as Average, Sum, Count, Max, and Min. For example, group data to compute the sum of sales per product or the average visits per day."
+              name="AGG_EventPerformance_Summary"
+              version="3">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the approximate number of group by keys that the aggregation produces. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no KeyScale value is used."
+                  name="KeyScale"
+                  typeConverter="KeyScaleType">0</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the exact number of group by keys that the aggregation produces. If a KeyScale value is specified, the value in Keys takes precedence."
+                  name="Keys" />
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the approximate number of distinct values in a column that the aggregation counts distinctly. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no CountDistinctScale value is used."
+                  name="CountDistinctScale"
+                  typeConverter="KeyScaleType">0</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the exact number of distinct values in a column that the aggregation counts distinctly. If a CountDistinctScale value is specified, the value in CountDistinctKeys takes precedence."
+                  name="CountDistinctKeys" />
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage by which memory can be extended during the aggregation. Valid values are between 1 and 100."
+                  name="AutoExtendFactor">25</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Inputs[Aggregate Input 1]"
+                  name="Aggregate Input 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Inputs[Aggregate Input 1].Columns[event_key]"
+                      cachedDataType="i4"
+                      cachedName="event_key"
+                      lineageId="Package\DFT_Load_FactEventPerformance\LKP_DimEvent_EventKey.Outputs[Lookup Match Output].Columns[event_key]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Inputs[Aggregate Input 1].Columns[store_key]"
+                      cachedDataType="i4"
+                      cachedName="store_key"
+                      lineageId="Package\DFT_Load_FactEventPerformance\LKP_DimStore_StoreKey.Outputs[Lookup Match Output].Columns[store_key]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Inputs[Aggregate Input 1].Columns[date_key]"
+                      cachedDataType="i4"
+                      cachedName="date_key"
+                      lineageId="Package\DFT_Load_FactEventPerformance\LKP_DimDate_DateKey.Outputs[Lookup Match Output].Columns[date_key]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Inputs[Aggregate Input 1].Columns[calculated_revenue]"
+                      cachedDataType="r8"
+                      cachedName="calculated_revenue"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[calculated_revenue]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Inputs[Aggregate Input 1].Columns[sales_id]"
+                      cachedDataType="i2"
+                      cachedName="sales_id"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[sales_id]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Inputs[Aggregate Input 1].Columns[visit_id]"
+                      cachedDataType="i2"
+                      cachedName="visit_id"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[visit_id]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Inputs[Aggregate Input 1].Columns[is_new_customer]"
+                      cachedDataType="i4"
+                      cachedName="is_new_customer"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[is_new_customer]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1]"
+                  name="Aggregate Output 1">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the approximate number of group by keys that the aggregation produces. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no KeyScale value is used."
+                      name="KeyScale"
+                      typeConverter="KeyScaleType">0</property>
+                    <property
+                      dataType="System.Null"
+                      description="Specifies the exact number of group by keys that the aggregation produces. If a KeyScale value is specified, the value in Keys takes precedence."
+                      name="Keys" />
+                  </properties>
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1].Columns[event_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1].Columns[event_key]"
+                      name="event_key">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\DFT_Load_FactEventPerformance\LKP_DimEvent_EventKey.Outputs[Lookup Match Output].Columns[event_key]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1].Columns[store_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1].Columns[store_key]"
+                      name="store_key">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\DFT_Load_FactEventPerformance\LKP_DimStore_StoreKey.Outputs[Lookup Match Output].Columns[store_key]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1].Columns[date_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1].Columns[date_key]"
+                      name="date_key">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\DFT_Load_FactEventPerformance\LKP_DimDate_DateKey.Outputs[Lookup Match Output].Columns[date_key]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1].Columns[total_revenue]"
+                      dataType="r8"
+                      lineageId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1].Columns[total_revenue]"
+                      name="total_revenue">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[calculated_revenue]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">4</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1].Columns[total_transactions]"
+                      dataType="ui4"
+                      lineageId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1].Columns[total_transactions]"
+                      name="total_transactions">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[sales_id]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">3</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the approximate number of distinct values in a column that the aggregation counts distinctly. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no CountDistinctScale value is used."
+                          name="CountDistinctScale">0</property>
+                        <property
+                          dataType="System.UInt32"
+                          description="Specifies the exact number of distinct values in a column that the aggregation counts distinctly. If a CountDistinctScale value is specified, the value in CountDistinctKeys takes precedence."
+                          name="CountDistinctKeys">0</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1].Columns[total_visits]"
+                      dataType="ui4"
+                      lineageId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1].Columns[total_visits]"
+                      name="total_visits">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[visit_id]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">3</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the approximate number of distinct values in a column that the aggregation counts distinctly. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no CountDistinctScale value is used."
+                          name="CountDistinctScale">0</property>
+                        <property
+                          dataType="System.UInt32"
+                          description="Specifies the exact number of distinct values in a column that the aggregation counts distinctly. If a CountDistinctScale value is specified, the value in CountDistinctKeys takes precedence."
+                          name="CountDistinctKeys">0</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1].Columns[new_customer_count]"
+                      dataType="i8"
+                      lineageId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1].Columns[new_customer_count]"
+                      name="new_customer_count">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[is_new_customer]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">4</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DST_FactEventPerformance"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[FactEventPerformance]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input].Columns[event_key]"
+                      cachedDataType="i4"
+                      cachedName="event_key"
+                      externalMetadataColumnId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input].ExternalColumns[event_key]"
+                      lineageId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1].Columns[event_key]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input].Columns[store_key]"
+                      cachedDataType="i4"
+                      cachedName="store_key"
+                      externalMetadataColumnId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input].ExternalColumns[store_key]"
+                      lineageId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1].Columns[store_key]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input].Columns[date_key]"
+                      cachedDataType="i4"
+                      cachedName="date_key"
+                      externalMetadataColumnId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input].ExternalColumns[date_key]"
+                      lineageId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1].Columns[date_key]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input].Columns[total_transactions]"
+                      cachedDataType="ui4"
+                      cachedName="total_transactions"
+                      externalMetadataColumnId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input].ExternalColumns[total_transactions]"
+                      lineageId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1].Columns[total_transactions]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input].Columns[total_visits]"
+                      cachedDataType="ui4"
+                      cachedName="total_visits"
+                      externalMetadataColumnId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input].ExternalColumns[additional_visits]"
+                      lineageId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1].Columns[total_visits]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input].Columns[total_revenue]"
+                      cachedDataType="r8"
+                      cachedName="total_revenue"
+                      externalMetadataColumnId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input].ExternalColumns[additional_revenue]"
+                      lineageId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1].Columns[total_revenue]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input].Columns[new_customer_count]"
+                      cachedDataType="i8"
+                      cachedName="new_customer_count"
+                      externalMetadataColumnId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input].ExternalColumns[new_customer_count]"
+                      lineageId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1].Columns[new_customer_count]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input].ExternalColumns[event_key]"
+                      dataType="i4"
+                      name="event_key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input].ExternalColumns[store_key]"
+                      dataType="i4"
+                      name="store_key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input].ExternalColumns[date_key]"
+                      dataType="i4"
+                      name="date_key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input].ExternalColumns[additional_visits]"
+                      dataType="i4"
+                      name="additional_visits" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input].ExternalColumns[additional_revenue]"
+                      dataType="numeric"
+                      name="additional_revenue"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input].ExternalColumns[new_customer_count]"
+                      dataType="i4"
+                      name="new_customer_count" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input].ExternalColumns[total_transactions]"
+                      dataType="i4"
+                      name="total_transactions" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Load_FactEventPerformance\LKP_DimDate_DateKey"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="LKP_DimDate_DateKey"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[DimDate]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[DimDate]) [refTable]
+where [refTable].[full_date] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="date_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="full_date" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="day_of_week" dataType="DT_WSTR" length="10" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="month" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="quarter" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="year" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="is_weekend" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="season" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[date]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Load_FactEventPerformance\LKP_DimDate_DateKey.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_Load_FactEventPerformance\LKP_DimDate_DateKey.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\LKP_DimDate_DateKey.Inputs[Lookup Input].Columns[date]"
+                      cachedDataType="dbDate"
+                      cachedName="date"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[date]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">full_date</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Load_FactEventPerformance\LKP_DimDate_DateKey.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT_Load_FactEventPerformance\LKP_DimDate_DateKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\LKP_DimDate_DateKey.Outputs[Lookup Match Output].Columns[date_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DFT_Load_FactEventPerformance\LKP_DimDate_DateKey.Outputs[Lookup Match Output].Columns[date_key]"
+                      name="date_key"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">date_key</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Load_FactEventPerformance\LKP_DimDate_DateKey.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT_Load_FactEventPerformance\LKP_DimDate_DateKey.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Load_FactEventPerformance\LKP_DimDate_DateKey.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT_Load_FactEventPerformance\LKP_DimDate_DateKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\LKP_DimDate_DateKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactEventPerformance\LKP_DimDate_DateKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\LKP_DimDate_DateKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactEventPerformance\LKP_DimDate_DateKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Load_FactEventPerformance\LKP_DimEvent_EventKey"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="LKP_DimEvent_EventKey"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[DimEvent]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[DimEvent]) [refTable]
+where [refTable].[event_id] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="event_id" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="event_name" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="finish_date" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="start_date" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="event_duration" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="store_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="event_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[event_id]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Load_FactEventPerformance\LKP_DimEvent_EventKey.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_Load_FactEventPerformance\LKP_DimEvent_EventKey.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\LKP_DimEvent_EventKey.Inputs[Lookup Input].Columns[event_id]"
+                      cachedDataType="i2"
+                      cachedName="event_id"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[event_id]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">event_id</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Load_FactEventPerformance\LKP_DimEvent_EventKey.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT_Load_FactEventPerformance\LKP_DimEvent_EventKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\LKP_DimEvent_EventKey.Outputs[Lookup Match Output].Columns[event_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DFT_Load_FactEventPerformance\LKP_DimEvent_EventKey.Outputs[Lookup Match Output].Columns[event_key]"
+                      name="event_key"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">event_key</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Load_FactEventPerformance\LKP_DimEvent_EventKey.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT_Load_FactEventPerformance\LKP_DimEvent_EventKey.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Load_FactEventPerformance\LKP_DimEvent_EventKey.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT_Load_FactEventPerformance\LKP_DimEvent_EventKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\LKP_DimEvent_EventKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactEventPerformance\LKP_DimEvent_EventKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\LKP_DimEvent_EventKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactEventPerformance\LKP_DimEvent_EventKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Load_FactEventPerformance\LKP_DimStore_StoreKey"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="LKP_DimStore_StoreKey"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[DimStore]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[DimStore]) [refTable]
+where [refTable].[store_id] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="store_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="store_id" dataType="DT_UI1" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="street" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="city" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="province" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="country" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[store_id]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Load_FactEventPerformance\LKP_DimStore_StoreKey.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+                  connectionManagerRefId="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreDWH]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_Load_FactEventPerformance\LKP_DimStore_StoreKey.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\LKP_DimStore_StoreKey.Inputs[Lookup Input].Columns[store_id]"
+                      cachedDataType="ui1"
+                      cachedName="store_id"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[store_id]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">store_id</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Load_FactEventPerformance\LKP_DimStore_StoreKey.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT_Load_FactEventPerformance\LKP_DimStore_StoreKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\LKP_DimStore_StoreKey.Outputs[Lookup Match Output].Columns[store_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DFT_Load_FactEventPerformance\LKP_DimStore_StoreKey.Outputs[Lookup Match Output].Columns[store_key]"
+                      name="store_key"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">store_key</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Load_FactEventPerformance\LKP_DimStore_StoreKey.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT_Load_FactEventPerformance\LKP_DimStore_StoreKey.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Load_FactEventPerformance\LKP_DimStore_StoreKey.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT_Load_FactEventPerformance\LKP_DimStore_StoreKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\LKP_DimStore_StoreKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactEventPerformance\LKP_DimStore_StoreKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\LKP_DimStore_StoreKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactEventPerformance\LKP_DimStore_StoreKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC_stg_EventPerformance"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT 
+    e.event_id,
+    v.store_id,
+    v.[date],
+    v.visit_id,
+    sd.sales_id,
+    ISNULL(sd.quantity * p.price, 0) AS calculated_revenue,
+    -- Kiểm tra khách mới dựa trên cột [date]
+    CASE WHEN v.[date] = c.first_visit_date THEN 1 ELSE 0 END AS is_new_customer
+FROM stg_event e
+INNER JOIN stg_customer_visit v 
+    ON v.store_id = e.store_id 
+    AND v.[date] BETWEEN e.start_date AND e.finish_date
+LEFT JOIN (
+    -- Tìm ngày đầu tiên khách xuất hiện (đổi visit_date thành [date])
+    SELECT customer_id, MIN([date]) as first_visit_date 
+    FROM stg_customer_visit 
+    GROUP BY customer_id
+) c ON v.customer_id = c.customer_id
+LEFT JOIN stg_sales s ON v.visit_id = s.visit_id
+LEFT JOIN stg_sales_detail sd ON s.sales_id = sd.sales_id
+LEFT JOIN stg_product p ON sd.product_id = p.product_id</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreStaging]"
+                  connectionManagerRefId="Package.ConnectionManagers[ADMIN-PC\SQLEXPRESS.RetailStoreStaging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[event_id]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].ExternalColumns[event_id]"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[event_id]"
+                      name="event_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[store_id]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].ExternalColumns[store_id]"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[store_id]"
+                      name="store_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].ExternalColumns[date]"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[date]"
+                      name="date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[visit_id]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].ExternalColumns[visit_id]"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[visit_id]"
+                      name="visit_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[sales_id]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].ExternalColumns[sales_id]"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[sales_id]"
+                      name="sales_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[calculated_revenue]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].ExternalColumns[calculated_revenue]"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[calculated_revenue]"
+                      name="calculated_revenue"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[is_new_customer]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].ExternalColumns[is_new_customer]"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].Columns[is_new_customer]"
+                      name="is_new_customer"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].ExternalColumns[event_id]"
+                      dataType="i2"
+                      name="event_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].ExternalColumns[store_id]"
+                      dataType="ui1"
+                      name="store_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].ExternalColumns[date]"
+                      dataType="dbDate"
+                      name="date" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].ExternalColumns[visit_id]"
+                      dataType="i2"
+                      name="visit_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].ExternalColumns[sales_id]"
+                      dataType="i2"
+                      name="sales_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].ExternalColumns[calculated_revenue]"
+                      dataType="r8"
+                      name="calculated_revenue" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output].ExternalColumns[is_new_customer]"
+                      dataType="i4"
+                      name="is_new_customer" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Error Output].Columns[event_id]"
+                      dataType="i2"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Error Output].Columns[event_id]"
+                      name="event_id" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Error Output].Columns[store_id]"
+                      dataType="ui1"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Error Output].Columns[store_id]"
+                      name="store_id" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Error Output].Columns[date]"
+                      dataType="dbDate"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Error Output].Columns[date]"
+                      name="date" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Error Output].Columns[visit_id]"
+                      dataType="i2"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Error Output].Columns[visit_id]"
+                      name="visit_id" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Error Output].Columns[sales_id]"
+                      dataType="i2"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Error Output].Columns[sales_id]"
+                      name="sales_id" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Error Output].Columns[calculated_revenue]"
+                      dataType="r8"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Error Output].Columns[calculated_revenue]"
+                      name="calculated_revenue" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Error Output].Columns[is_new_customer]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Error Output].Columns[is_new_customer]"
+                      name="is_new_customer" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT_Load_FactEventPerformance.Paths[Aggregate Output 1]"
+              endId="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance.Inputs[OLE DB Destination Input]"
+              name="Aggregate Output 1"
+              startId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Outputs[Aggregate Output 1]" />
+            <path
+              refId="Package\DFT_Load_FactEventPerformance.Paths[Lookup Match Output]"
+              endId="Package\DFT_Load_FactEventPerformance\LKP_DimStore_StoreKey.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\DFT_Load_FactEventPerformance\LKP_DimEvent_EventKey.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT_Load_FactEventPerformance.Paths[Lookup Match Output1]"
+              endId="Package\DFT_Load_FactEventPerformance\LKP_DimDate_DateKey.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\DFT_Load_FactEventPerformance\LKP_DimStore_StoreKey.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT_Load_FactEventPerformance.Paths[Lookup Match Output2]"
+              endId="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary.Inputs[Aggregate Input 1]"
+              name="Lookup Match Output"
+              startId="Package\DFT_Load_FactEventPerformance\LKP_DimDate_DateKey.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT_Load_FactEventPerformance.Paths[OLE DB Source Output]"
+              endId="Package\DFT_Load_FactEventPerformance\LKP_DimEvent_EventKey.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="236.8,41.6"
+          Id="Package\DFT_Load_FactEventPerformance"
+          TopLeft="184.785714667367,75.0882352331209" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DFT_Load_FactEventPerformance">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="196,41.6"
+          Id="Package\DFT_Load_FactEventPerformance\LKP_DimEvent_EventKey"
+          TopLeft="115.500000234161,93.4411763935043" />
+        <NodeLayout
+          Size="208.8,41.6"
+          Id="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance"
+          TopLeft="228.357143331547,1.67647059158676" />
+        <NodeLayout
+          Size="208.8,41.6"
+          Id="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance"
+          TopLeft="246.214286226704,418.805882104262" />
+        <NodeLayout
+          Size="187.2,41.6"
+          Id="Package\DFT_Load_FactEventPerformance\LKP_DimDate_DateKey"
+          TopLeft="252.642857605097,249.617646871141" />
+        <NodeLayout
+          Size="192.8,41.6"
+          Id="Package\DFT_Load_FactEventPerformance\LKP_DimStore_StoreKey"
+          TopLeft="372.857143650858,167.4705880885" />
+        <NodeLayout
+          Size="240.8,41.6"
+          Id="Package\DFT_Load_FactEventPerformance\AGG_EventPerformance_Summary"
+          TopLeft="230.500000478966,341.323529271674" />
+        <EdgeLayout
+          Id="Package\DFT_Load_FactEventPerformance.Paths[Lookup Match Output2]"
+          TopLeft="348.571429042031,291.217646871141">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50.1058824005327"
+              Start="0,0"
+              End="0,42.6058824005327">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.6058824005327" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,15.4982537002663,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_Load_FactEventPerformance.Paths[Lookup Match Output1]"
+          TopLeft="469.257143650858,209.0705880885">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-123.014286045761,40.547058782641"
+              Start="0,0"
+              End="-123.014286045761,33.047058782641">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.2735293913205" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.2735293913205"
+                    Point2="0,20.2735293913205"
+                    Point3="-4,20.2735293913205" />
+                  <mssgle:LineSegment
+                    End="-119.014286045761,20.2735293913205" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-119.014286045761,20.2735293913205"
+                    Point2="-123.014286045761,20.2735293913205"
+                    Point3="-123.014286045761,24.2735293913205" />
+                  <mssgle:LineSegment
+                    End="-123.014286045761,33.047058782641" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-109.69852974163,25.2735293913205,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_Load_FactEventPerformance.Paths[Lookup Match Output]"
+          TopLeft="213.500000234161,135.041176393504">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="255.757143416697,32.4294116949956"
+              Start="0,0"
+              End="255.757143416697,24.9294116949956">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.2147058474978" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12.2147058474978"
+                    Point2="0,16.2147058474978"
+                    Point3="4,16.2147058474978" />
+                  <mssgle:LineSegment
+                    End="251.757143416697,16.2147058474978" />
+                  <mssgle:CubicBezierSegment
+                    Point1="251.757143416697,16.2147058474978"
+                    Point2="255.757143416697,16.2147058474978"
+                    Point3="255.757143416697,20.2147058474978" />
+                  <mssgle:LineSegment
+                    End="255.757143416697,24.9294116949956" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="79.6871849895984,21.2147058474978,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_Load_FactEventPerformance.Paths[Aggregate Output 1]"
+          TopLeft="350.757143352835,382.923529271674">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35.8823528325885"
+              Start="0,0"
+              End="0,28.3823528325885">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.3823528325885" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_Load_FactEventPerformance.Paths[OLE DB Source Output]"
+          TopLeft="332.757143331547,43.2764705915868">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-119.257143097386,50.1647058019175"
+              Start="0,0"
+              End="-119.257143097386,42.6647058019175">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.0823529009588" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.0823529009588"
+                    Point2="0,25.0823529009588"
+                    Point3="-4,25.0823529009588" />
+                  <mssgle:LineSegment
+                    End="-115.257143097386,25.0823529009588" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-115.257143097386,25.0823529009588"
+                    Point2="-119.257143097386,25.0823529009588"
+                    Point3="-119.257143097386,29.0823529009588" />
+                  <mssgle:LineSegment
+                    End="-119.257143097386,42.6647058019175" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Load_FactEventPerformance\LKP_DimEvent_EventKey">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[DimEvent]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Load_FactEventPerformance\SRC_stg_EventPerformance">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Load_FactEventPerformance\DST_FactEventPerformance">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Load_FactEventPerformance\LKP_DimDate_DateKey">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[DimDate]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Load_FactEventPerformance\LKP_DimStore_StoreKey">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[DimStore]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
